@@ -21,7 +21,7 @@ class TestObjectDetection:
         with open('panda.png', 'rb') as f:
             image = f.read()
 
-        resp = await cli.post('/predict', data={'image': image})
+        resp = await cli.post('/predict', data=image, headers={'Content-Type': 'image/jpeg'})
 
         assert resp.status == 200
 

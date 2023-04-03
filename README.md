@@ -27,6 +27,18 @@ copilot env init
 copilot deploy
 ```
 
+Make single prediction
+```bash
+curl -X POST -H "Content-Type: image/jpeg" --data-binary "@flower.png" http://<prefix>.us-east-1.elb.amazonaws.com/predict
+```
+
+
+Benchmark using apache benchmark
+```bash
+ab -n 10 -c 10 -p flower.png -T image/jpeg http://<prefix>.us-east-1.elb.amazonaws.com/predict
+```
+
+
 ### Run locally
 
 #### Build the Docker image
@@ -38,13 +50,13 @@ docker build -t image-inference .
 #### Run the Docker container
 
 ```bash
-docker run --rm -p 80:80 image-inference
+docker run --rm -p 8080:8080 image-inference
 ```
 
 #### Make a prediction using the REST API
 
 ```bash
-curl -X POST -F "image=@panda.png" http://localhost:80/predict
+curl -X POST -H "Content-Type: image/jpeg" --data-binary "@flower.png" http://localhost:8080/predict
 ```
 
 ### Test
