@@ -72,3 +72,54 @@ pip install -r dev-requirements.txt
 ```bash
 pytest -v test_inference.py
 ```
+
+## Copilot LLM example
+
+This example demonstrates how to deploy large language model for text generation using transformers library on Amazon ECS/Fargate with AWS Copilot. This project provides an easy-to-follow example and a scalable solution for serving deep learning models in the cloud.
+
+### Deploy
+
+Clone repository
+```bash
+git clone https://github.com/ryfeus/aws-inference-benchmark.git
+cd copilot/transformers/aws-copilot-inference-service
+```
+
+Clone model from Hugging Face repo. Example - LaMini T5 223M
+```bash
+git lfs install
+git clone https://huggingface.co/MBZUAI/LaMini-T5-223M.git
+mv LaMini-T5-223M model
+```
+
+Initialize the environment and deploy the application.
+
+```bash
+copilot env init
+copilot deploy
+```
+
+Make single prediction
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"instruction":"Main tour attractions in Rome:?"}' http://<prefix>.us-east-1.elb.amazonaws.com/predict
+```
+
+### Run locally
+
+#### Build the Docker image
+
+```bash
+docker build -t llm-inference .
+```
+
+#### Run the Docker container
+
+```bash
+docker run --rm -p 8080:8080 llm-inference
+```
+
+#### Make a prediction using the REST API
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"instruction":"Main tour attractions in Rome:?"}' http://localhost:8080/predict
+```
