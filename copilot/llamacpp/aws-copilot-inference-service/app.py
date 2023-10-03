@@ -3,7 +3,7 @@ import json
 from llama_cpp import Llama
 
 
-llm = Llama(model_path="model/llama-2-7b.ggmlv3.q2_K.bin")
+llm = Llama(model_path="model/llama-2-7b.ggmlv3.q5_K_M.bin")
 routes = web.RouteTableDef()
 
 
